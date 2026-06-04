@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Payment - RailEase</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="bg-dark text-white">
+    <div class="container py-5 d-flex align-items-center justify-content-center min-vh-100">
+        <div class="col-lg-5 fade-in">
+            <div class="bg-glass p-5 rounded-5 border-white/5 shadow-2xl">
+                <div class="text-center mb-5">
+                    <h2 class="fw-black mb-1">CHECKOUT</h2>
+                    <p class="text-secondary small tracking-widest text-uppercase">Final Step to Your Journey</p>
+                </div>
+
+                <div class="summary bg-black/40 p-4 rounded-4 border border-orange/30 mb-5 text-center">
+                    <div class="small fw-bold text-secondary text-uppercase tracking-widest mb-1 opacity-50">Grand Total</div>
+                    <div class="h2 fw-black mb-0 text-orange">₹{{ train.price|int }}</div>
+                    <div class="mt-2 text-white/40 small fw-bold text-uppercase" style="font-size: 0.65rem;">
+                        {{ train.name }} • Seat {{ seat_no }} • {{ date }}
+                    </div>
+                </div>
+
+                <form action="/confirm_booking" method="POST">
+                    <input type="hidden" name="train_id" value="{{ train.id }}">
+                    <input type="hidden" name="seat_no" value="{{ seat_no }}">
+                    <input type="hidden" name="date" value="{{ date }}">
+                    
+                    <div class="mb-4">
+                        <label class="small fw-bold text-secondary text-uppercase mb-3 d-block opacity-75">Card Details</label>
+                        <input type="text" class="form-control py-3 shadow-none text-center" placeholder="0000 0000 0000 0000" maxlength="19" required>
+                    </div>
+                    
+                    <div class="row g-3 mb-5">
+                        <div class="col-7">
+                            <label class="small fw-bold text-secondary text-uppercase mb-3 d-block opacity-75">Expiry</label>
+                            <input type="text" class="form-control py-3 shadow-none text-center" placeholder="MM / YY" required>
+                        </div>
+                        <div class="col-5">
+                            <label class="small fw-bold text-secondary text-uppercase mb-3 d-block opacity-75">CVV</label>
+                            <input type="password" class="form-control py-3 shadow-none text-center" placeholder="***" maxlength="3" required>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-orange w-100 py-4 fw-black text-uppercase shadow-2xl" style="font-size: 1.1rem; letter-spacing: 2px;">
+                        Finalize Payment
+                    </button>
+                </form>
+                
+                <div class="mt-5 text-center opacity-40">
+                    <div class="d-flex align-items-center justify-content-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/>
+                        </svg>
+                        <span class="small fw-bold text-uppercase tracking-widest">Encypted via SSL 256</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
